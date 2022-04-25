@@ -1,0 +1,91 @@
+<div *ngIf="!isEditable;else editableForm" style="background-color: #ededed; padding: 1rem; border-radius: 8px;">
+  Username: {{employeeDetails?.username}}
+  <button (click)="updateSelectedDetails()"><img src="../assets/icons/editing (1).png" width="16px"
+      height="16px" /></button>
+  <br />
+  Name: {{employeeDetails?.name}} <br />
+  Email: {{employeeDetails?.email}} <br />
+  Phone: {{employeeDetails?.phone}} <br />
+  Address:
+  <button (click)="displayState.isAddressDetailsVisible = !displayState.isAddressDetailsVisible">
+    {{displayState.isAddressDetailsVisible? 'Hide': 'Show'}}
+  </button>
+  <p *ngIf="displayState.isAddressDetailsVisible" style="background-color: whitesmoke; padding: 0.8rem">
+    Suite: {{employeeDetails?.address?.suite}} <br />
+    Street: {{employeeDetails?.address?.street}} <br />
+    City: {{employeeDetails?.address?.city}} <br />
+    Zip Code: {{employeeDetails?.address?.zipcode}}
+  </p>
+  <br />
+  Company:
+  <button (click)="displayState.isCompanyDetialsVisible = !displayState.isCompanyDetialsVisible">
+    {{displayState.isCompanyDetialsVisible? 'Hide': 'Show'}}
+  </button>
+  <p *ngIf="displayState.isCompanyDetialsVisible" style="background-color: whitesmoke; padding: 0.8rem">
+    Name: {{employeeDetails?.company?.name}} <br />
+    BS: {{employeeDetails?.company?.bs}} <br />
+    Description: {{employeeDetails?.company?.catchPhrase}}
+  </p>
+  <br/>
+  Website: <a [href]="'https://' + employeeDetails?.website" target="_blank"> Open in new tab</a>
+</div>
+
+<ng-template #editableForm>
+  <div style="background-color: #ededed; padding: 1rem; border-radius: 8px;">
+    <label for="fname">Username:</label>
+    <input (change)="updateDetails('id', $event?.target)" type="text" [value]="employeeDetails?.username"
+      [disabled]=" editType==='create'? false : true"><br />
+
+    <label for="Name">Name:</label>
+    <input (change)="updateDetails('name', $event?.target)" type="text" [value]="employeeDetails?.name"><br />
+
+    <label for="Email">Email:</label>
+    <input (change)="updateDetails('email', $event?.target)" type="text" [value]="employeeDetails?.email"><br />
+
+    <label for="Phone">Phone:</label>
+    <input (change)="updateDetails('phone', $event?.target)" type="text" [value]="employeeDetails?.phone"><br />
+
+    <label for="Address?">Address?:</label>
+    <p style="background-color: whitesmoke; padding: 0.8rem">
+
+      <label for="Suite">Suite:</label>
+      <input (change)="updateDetails('address.suite', $event?.target)" type="text"
+        [value]="employeeDetails?.address?.suite"><br />
+
+      <label for="Street">Street:</label>
+      <input (change)="updateDetails('address.street', $event?.target)" type="text"
+        [value]="employeeDetails?.address?.street"><br />
+
+      <label for="City">City:</label>
+      <input (change)="updateDetails('address.city', $event?.target)" type="text"
+        [value]="employeeDetails?.address?.city"><br />
+
+      <label for="Zip Code">Zip Code:</label>
+      <input (change)="updateDetails('address.zipcode', $event?.target)" type="text"
+        [value]="employeeDetails?.address?.zipcode"><br />
+    </p>
+
+    <label for="Address?">Company:</label>
+    <p style="background-color: whitesmoke; padding: 0.8rem">
+      <label for="Name">Name:</label>
+      <input (change)="updateDetails('company.name', $event?.target)" type="text"
+        [value]="employeeDetails?.company?.name"><br />
+
+      <label for="BS">BS:</label>
+      <input (change)="updateDetails('company.bs', $event?.target)" type="text"
+        [value]="employeeDetails?.company?.bs"><br />
+
+      <label for="catchPhrase">Description:</label>
+      <input (change)="updateDetails('company.catchPhrase', $event?.target)" type="text"
+        [value]="employeeDetails?.company?.catchPhrase"><br />
+    </p>
+
+    <label for="Links">Website:</label>
+    <input (change)="updateDetails('website', $event?.target)" type="text"
+      [value]="employeeDetails?.website"><br /><br />
+    <button (click)="persistChanges()">Submit</button>
+    <button (click)="deleteEmployee()">Delete</button>
+    <button *ngIf="editType !== 'create'" (click)="updateSelectedDetails()">Cancel</button>
+    <br />
+  </div>
+</ng-template>

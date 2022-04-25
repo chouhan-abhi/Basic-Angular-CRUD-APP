@@ -1,0 +1,11 @@
+<div style="width: 50%">
+  <button (click)="isAddNew = !isAddNew">{{ isAddNew? 'Cancel': 'Create new'}}</button> <br />
+  <app-employee-details *ngIf="isAddNew" editType="create" [employeeDetails]=""></app-employee-details>
+</div>
+
+<div *ngFor="let employee of employees">
+  <div style="width: 50%">
+    <h3>{{employee.id +" "+ employee.name}}</h3>
+    <app-employee-details editType="update" [employeeDetails]="employee"></app-employee-details>
+  </div>
+</div>
